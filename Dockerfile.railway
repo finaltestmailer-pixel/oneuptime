@@ -1,0 +1,46 @@
+# Railway-optimized Dockerfile for OneUptime
+FROM node:18-alpine
+
+# Set working directory
+WORKDIR /app
+
+# Install system dependencies
+RUN apk add --no-cache \
+    git \
+    python3 \
+    make \
+    g++ \
+    postgresql-client
+
+# Copy package files
+COPY package*.json ./
+COPY Common/package*.json ./Common/
+COPY App/package*.json ./App/
+
+# Install dependencies
+RUN npm install --production
+
+# Copy source code
+COPY . .
+
+# Build the application
+WORKDIR /app/App
+RUN npm run build-frontends
+
+# Set working directory back to root
+WORKDIR /app
+
+# Create non-root user
+RUN addgroup -g 1001 -S nodejs
+RUN adduser -S oneuptime -u 1001
+USER oneuptime
+
+# Expose port
+EXPOSE 3002
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+  CMD curl -f http://localhost:3002/api/status || exit 1
+
+# Start command
+CMD ["node", "--require", "ts-node/register", "App/Index.ts"]
