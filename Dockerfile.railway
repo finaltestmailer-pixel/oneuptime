@@ -17,7 +17,7 @@ COPY package*.json ./
 COPY Common/package*.json ./Common/
 COPY App/package*.json ./App/
 
-# Install ALL dependencies including dev dependencies for TypeScript
+# Install root dependencies first
 ENV HUSKY=0
 RUN npm ci --ignore-scripts
 
@@ -35,7 +35,12 @@ WORKDIR /app
 # Copy source code and config
 COPY . .
 COPY config.railway.env config.env
+
+# Replace package.json with Railway-specific one AFTER copying source
 COPY package.railway.json package.json
+
+# Install any additional dependencies from Railway package.json
+RUN npm install --production
 
 # Use Railway-specific TypeScript config
 ENV TS_NODE_PROJECT=tsconfig.railway.json
