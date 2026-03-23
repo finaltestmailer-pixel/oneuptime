@@ -6,8 +6,6 @@
   },
   "deploy": {
     "startCommand": "node --require ts-node/register App/Index.ts",
-    "healthcheckPath": "/api/status",
-    "healthcheckTimeout": 100,
     "restartPolicyType": "ON_FAILURE",
     "restartPolicyMaxRetries": 10
   }

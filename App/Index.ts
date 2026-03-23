@@ -30,7 +30,7 @@ const init: PromiseVoidFunction = async (): Promise<void> => {
     const statusCheck: PromiseVoidFunction = async (): Promise<void> => {
       // Check the status of infrastructure components
       return await InfrastructureStatus.checkStatusWithRetry({
-        checkClickhouseStatus: true,
+        checkClickhouseStatus: false, // Disabled for Railway deployment
         checkPostgresStatus: true,
         checkRedisStatus: true,
         retryCount: 3,
@@ -49,13 +49,8 @@ const init: PromiseVoidFunction = async (): Promise<void> => {
 
     const analyticsDatabaseCheck: PromiseVoidFunction =
       async (): Promise<void> => {
-        // Check the status of analytics database
-        return await InfrastructureStatus.checkStatusWithRetry({
-          checkClickhouseStatus: true,
-          checkPostgresStatus: false,
-          checkRedisStatus: false,
-          retryCount: 3,
-        });
+        // Check the status of analytics database - disabled for Railway
+        return Promise.resolve(); // Skip ClickHouse check for Railway deployment
       };
 
     const databaseCheck: PromiseVoidFunction = async (): Promise<void> => {
@@ -86,10 +81,10 @@ const init: PromiseVoidFunction = async (): Promise<void> => {
     // Connect to Redis
     await Redis.connect();
 
-    // Connect to Clickhouse database
-    await ClickhouseAppInstance.connect(
-      ClickhouseAppInstance.getDatasourceOptions(),
-    );
+    // Skip ClickHouse connection for Railway deployment
+    // await ClickhouseAppInstance.connect(
+    //   ClickhouseAppInstance.getDatasourceOptions(),
+    // );
 
     // Initialize real-time functionalities
     await Realtime.init();

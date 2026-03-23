@@ -46,7 +46,7 @@ install_system_packages() {
         local DISTRIB
         DISTRIB=$(awk -F= '/^ID/{print $2}' /etc/os-release)
         
-        if [[ ${DISTRIB} = "ubuntu"* ]] || [[ ${DISTRIB} = "debian"* ]]; then
+        if [[ ${DISTRIB} = "ubuntu"* ]] || [[ ${DISTRIB} = "debian"* ]] || [[ ${DISTRIB} = "kali"* ]]; then
             print_info "Updating package cache..."
             sudo apt-get update
             sudo apt-get install -y $REQUIRED_PACKAGES
