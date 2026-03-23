@@ -21,6 +21,17 @@ COPY App/package*.json ./App/
 ENV HUSKY=0
 RUN npm ci --ignore-scripts
 
+# Install Common dependencies
+WORKDIR /app/Common
+RUN npm ci --ignore-scripts
+
+# Install App dependencies  
+WORKDIR /app/App
+RUN npm ci --ignore-scripts
+
+# Back to main directory
+WORKDIR /app
+
 # Copy source code and config
 COPY . .
 COPY config.railway.env config.env

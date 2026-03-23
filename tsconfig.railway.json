@@ -6,7 +6,9 @@
             "baseUrl": ".",
             "paths": {
                 "Common/*": ["./Common/*"]
-            }
+            },
+            "esModuleInterop": true,
+            "allowSyntheticDefaultImports": true
         }
     },
     "compilerOptions": {
@@ -14,7 +16,7 @@
         "jsx": "react",
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true,
-        "module": "es2022",
+        "module": "commonjs",
         "moduleResolution": "node",
         "baseUrl": ".",
         "paths": {
@@ -27,6 +29,7 @@
         "sourceMap": true,
         "outDir": "./build/dist",
         "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
         "forceConsistentCasingInFileNames": true,
         "strict": false,
         "skipLibCheck": true,
