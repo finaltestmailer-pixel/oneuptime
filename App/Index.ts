@@ -7,7 +7,6 @@ import IdentityRoutes from "./FeatureSet/Identity/Index";
 import MCPRoutes from "./FeatureSet/MCP/Index";
 import NotificationRoutes from "./FeatureSet/Notification/Index";
 import { PromiseVoidFunction } from "Common/Types/FunctionTypes";
-import { ClickhouseAppInstance } from "Common/Server/Infrastructure/ClickhouseDatabase";
 import PostgresAppInstance from "Common/Server/Infrastructure/PostgresDatabase";
 import Redis from "Common/Server/Infrastructure/Redis";
 import InfrastructureStatus from "Common/Server/Infrastructure/Status";

@@ -12,30 +12,28 @@ RUN apk add --no-cache \
     g++ \
     postgresql-client
 
-# Copy package files
+# Copy package files first for better caching
 COPY package*.json ./
-COPY Common/package*.json ./Common/
-COPY App/package*.json ./App/
 
-# Install dependencies (skip husky hooks)
+# Install ALL dependencies including dev dependencies for TypeScript
 ENV HUSKY=0
-RUN npm ci --omit=dev --ignore-scripts
+RUN npm ci --ignore-scripts
 
 # Copy source code and config
 COPY . .
 COPY config.railway.env config.env
-COPY package.railway.json package.json
-
-# Skip frontend build for now to get basic deployment working
-WORKDIR /app
 
 # Create non-root user
 RUN addgroup -g 1001 -S nodejs
 RUN adduser -S oneuptime -u 1001
+
+# Change ownership of the app directory
+RUN chown -R oneuptime:nodejs /app
+
 USER oneuptime
 
 # Expose port
 EXPOSE 3002
 
-# Start command
+# Start command using the original package.json (don't replace it)
 CMD ["node", "--require", "ts-node/register", "App/Index.ts"]
