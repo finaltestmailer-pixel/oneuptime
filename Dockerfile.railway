@@ -14,17 +14,17 @@ RUN apk add --no-cache \
 
 # Copy package files first for better caching
 COPY package*.json ./
+COPY Common/package*.json ./Common/
+COPY App/package*.json ./App/
 
 # Install ALL dependencies including dev dependencies for TypeScript
 ENV HUSKY=0
 RUN npm ci --ignore-scripts
 
-# Install module-alias for runtime path resolution
-RUN npm install module-alias
-
 # Copy source code and config
 COPY . .
 COPY config.railway.env config.env
+COPY package.railway.json package.json
 
 # Use Railway-specific TypeScript config
 ENV TS_NODE_PROJECT=tsconfig.railway.json
