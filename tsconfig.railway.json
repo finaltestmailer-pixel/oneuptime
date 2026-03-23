@@ -1,0 +1,35 @@
+{
+    "ts-node": {
+        "compilerOptions": {
+            "module": "commonjs",
+            "resolveJsonModule": true,
+            "baseUrl": ".",
+            "paths": {
+                "Common/*": ["./Common/*"]
+            }
+        }
+    },
+    "compilerOptions": {
+        "target": "es2017",
+        "jsx": "react",
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "module": "es2022",
+        "moduleResolution": "node",
+        "baseUrl": ".",
+        "paths": {
+            "Common/*": ["./Common/*"]
+        },
+        "typeRoots": [
+            "./node_modules/@types"
+        ],
+        "types": ["node"],
+        "sourceMap": true,
+        "outDir": "./build/dist",
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true,
+        "strict": false,
+        "skipLibCheck": true,
+        "resolveJsonModule": true
+    }
+}

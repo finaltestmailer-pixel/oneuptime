@@ -23,6 +23,9 @@ RUN npm ci --ignore-scripts
 COPY . .
 COPY config.railway.env config.env
 
+# Use Railway-specific TypeScript config
+ENV TS_NODE_PROJECT=tsconfig.railway.json
+
 # Create non-root user
 RUN addgroup -g 1001 -S nodejs
 RUN adduser -S oneuptime -u 1001
@@ -35,5 +38,5 @@ USER oneuptime
 # Expose port
 EXPOSE 3002
 
-# Start command using the original package.json (don't replace it)
+# Start command using Railway TypeScript config
 CMD ["node", "--require", "ts-node/register", "App/Index.ts"]
