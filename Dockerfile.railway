@@ -42,6 +42,14 @@ COPY package.railway.json package.json
 # Install any additional dependencies from Railway package.json
 RUN npm install --production
 
+# Create missing directories that might be needed
+RUN mkdir -p /app/FeatureSet/Notification/Templates/Partials
+RUN mkdir -p /app/views
+RUN mkdir -p /app/FeatureSet/StatusPage/views
+
+# Create a simple index.ejs file to prevent template errors
+RUN echo '<!DOCTYPE html><html><head><title>OneUptime</title></head><body><h1>OneUptime is starting...</h1></body></html>' > /app/views/index.ejs
+
 # Use Railway-specific TypeScript config
 ENV TS_NODE_PROJECT=tsconfig.railway.json
 
