@@ -5,7 +5,7 @@
     "dockerfilePath": "Dockerfile.railway"
   },
   "deploy": {
-    "startCommand": "npm start",
+    "startCommand": "node --require ts-node/register App/Index.ts",
     "healthcheckPath": "/api/status",
     "healthcheckTimeout": 100,
     "restartPolicyType": "ON_FAILURE",

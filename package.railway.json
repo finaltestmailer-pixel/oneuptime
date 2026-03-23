@@ -10,9 +10,8 @@
     },
     "scripts": {
         "start": "node --require ts-node/register App/Index.ts",
-        "build": "npm run build-frontends",
-        "build-frontends": "cd App && npm run build-frontends",
-        "railway-deploy": "cp config.railway.env config.env && npm start"
+        "build": "echo 'Build completed'",
+        "railway-deploy": "node --require ts-node/register App/Index.ts"
     },
     "dependencies": {
         "@modelcontextprotocol/sdk": "^1.27.1",

@@ -21,8 +21,10 @@ COPY App/package*.json ./App/
 ENV HUSKY=0
 RUN npm ci --omit=dev --ignore-scripts
 
-# Copy source code
+# Copy source code and config
 COPY . .
+COPY config.railway.env config.env
+COPY package.railway.json package.json
 
 # Skip frontend build for now to get basic deployment working
 WORKDIR /app
